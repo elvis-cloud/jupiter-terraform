@@ -67,5 +67,24 @@ resource "aws_eip" "dev-eip2" {
   }
 }
 
+resource "aws_nat_gateway" "dev-ngw1" {
+  allocation_id = aws_eip.dev-eip1.id
+  subnet_id = aws_subnet.dev-public-subnet1.id
+
+  tags = {
+    "Name" = "dev-ngw1"
+  }
+  depends_on = [ aws_internet_gateway.dev-igw ]
+}
+
+resource "aws_nat_gateway" "dev-ngw2" {
+  allocation_id = aws_eip.dev-eip2.id
+  subnet_id = aws_subnet.dev-public-subnet2.id
+
+  tags = {
+    "Name" = "dev-ngw2"
+  }
+  depends_on = [ aws_internet_gateway.dev-igw ]
+}
 
 
