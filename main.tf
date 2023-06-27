@@ -100,4 +100,13 @@ resource "aws_route" "public-internet-route" {
   gateway_id = aws_internet_gateway.dev-igw.id
 }
 
+resource "aws_route_table_association" "public-rt-assoc1" {
+  route_table_id = aws_route_table.dev-public-rt.id
+  subnet_id = aws_subnet.dev-public-subnet1.id
+}
+
+resource "aws_route_table_association" "public-rt-assoc2" {
+  route_table_id = aws_route_table.dev-public-rt.id
+  subnet_id = aws_subnet.dev-public-subnet2.id
+}
 
