@@ -110,3 +110,24 @@ resource "aws_route_table_association" "public-rt-assoc2" {
   subnet_id = aws_subnet.dev-public-subnet2.id
 }
 
+resource "aws_route_table" "dev-private-rt1" {
+  vpc_id = aws_vpc.dev-vpc.id
+  tags = {
+    "Name" = "dev-private-rt1"
+  }
+}
+
+resource "aws_route_table" "dev-private-rt2" {
+  vpc_id = aws_vpc.dev-vpc.id
+  tags = {
+    "Name" = "dev-private-rt2"
+  }
+}
+
+resource "aws_route" "private-internet-route1" {
+  route_table_id = aws_route_table.dev-private-rt1.id
+}
+
+resource "aws_route" "private-internet-route2" {
+  
+}
