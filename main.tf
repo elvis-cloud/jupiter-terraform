@@ -135,3 +135,13 @@ resource "aws_route" "private-internet-rt2" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_nat_gateway.dev-ngw2.id
 }
+
+resource "aws_route_table_association" "private-rt-assoc1" {
+  route_table_id = aws_route_table.dev-private-rt1.id
+  subnet_id = aws_subnet.dev-private-subnet1.id
+}
+
+resource "aws_route_table_association" "private-rt-assoc2" {
+  route_table_id = aws_route_table.dev-private-rt2.id
+  subnet_id = aws_subnet.dev-private-subnet2.id
+}
