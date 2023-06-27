@@ -98,10 +98,6 @@ resource "aws_route" "public-internet-route" {
   route_table_id = aws_route_table.dev-public-rt.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.dev-igw.id
-
-  tags = {
-    "Name" = "public-internet-route"
-  }
 }
 
 
