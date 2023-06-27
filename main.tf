@@ -87,4 +87,21 @@ resource "aws_nat_gateway" "dev-ngw2" {
   depends_on = [ aws_internet_gateway.dev-igw ]
 }
 
+resource "aws_route_table" "dev-public-rt" {
+  vpc_id = aws_vpc.dev-vpc.id
+  tags = {
+    "Name" = "dev-public-rt"
+  }
+}
+
+resource "aws_route" "public-internet-route" {
+  route_table_id = aws_route_table.dev-public-rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.dev-igw.id
+
+  tags = {
+    "Name" = "public-internet-route"
+  }
+}
+
 
