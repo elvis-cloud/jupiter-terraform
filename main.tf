@@ -287,7 +287,8 @@ resource "aws_alb_listener_rule" "http-to-https-rule" {
   }
 
   condition {
-    field  = "host-header"
-    values = ["*"]
+    host_header {
+      values = ["*"]
+    }
   }
 }
