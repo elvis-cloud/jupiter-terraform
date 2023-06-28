@@ -220,16 +220,7 @@ resource "aws_launch_template" "dev-app-lt" {
 
   user_data = <<-EOF
     #!/bin/bash
-    sudo su
-    yum update -y
-    yum install -y httpd
-    cd /var/www/html
-    wget https://github.com/elvis-cloud/jupiter/archive/refs/heads/main.zip
-    unzip main.zip
-    cp -r jupiter-main/* /var/www/html/
-    rm -rf jupiter-main main.zip
-    systemctl enable httpd 
-    systemctl start httpd
+    c3VkbyBzdQp5dW0gdXBkYXRlIC15Cnl1bSBpbnN0YWxsIC15IGh0dHBkCmNkIC92YXIvd3d3L2h0bWwKd2dldCBodHRwczovL2dpdGh1Yi5jb20vZWx2aXMtY2xvdWQvanVwaXRlci9hcmNoaXZlL3JlZnMvaGVhZHMvbWFpbi56aXAKdW56aXAgbWFpbi56aXAKY3AgLXIganVwaXRlci1tYWluLyogL3Zhci93d3cvaHRtbC8Kcm0gLXJmIGp1cGl0ZXItbWFpbiBtYWluLnppcApzeXN0ZW1jdGwgZW5hYmxlIGh0dHBkIApzeXN0ZW1jdGwgc3RhcnQgaHR0cGQ=
   EOF
 
   tag_specifications {
