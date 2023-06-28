@@ -253,3 +253,11 @@ resource "aws_alb" "dev-alb" {
     "Name" = "dev-alb" 
   }
 }
+
+resource "aws_alb_target_group" "dev-tg" {
+  name = "dev-lb-tg"
+  port = 80
+  protocol = "HTTP"
+  vpc_id = aws_vpc.dev-vpc.id
+}
+
