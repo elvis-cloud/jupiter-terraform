@@ -211,7 +211,7 @@ resource "aws_security_group" "webserver-sg" {
 resource "aws_launch_template" "dev-app-lt" {
   image_id = "ami-090e0fc566929d98b"
   instance_type = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.webserver-sg]
+  vpc_security_group_ids = [aws_security_group.webserver-sg.id]
   tags = {
     "Name" = "app-server-lt"
   }
