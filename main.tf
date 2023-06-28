@@ -302,9 +302,10 @@ resource "aws_autoscaling_group" "dev-asg" {
 }
 
 resource "aws_autoscaling_attachment" "dev-asg-alb-attachment" {
-  autoscaling_group_name = aws_autoscaling_group.dev-asg.name
-  elb = aws_alb.dev-alb.name
+  autoscaling_group_name = aws_autoscaling_group.dev-asg.id
+  elb = aws_alb.dev-alb.id
 }
+
 
 
 
