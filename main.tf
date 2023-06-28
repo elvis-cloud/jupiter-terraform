@@ -295,7 +295,22 @@ resource "aws_alb_listener" "dev-http-listener" {
   }
 }
 
+resource "aws_autoscaling_group" "dev-asg" {
+  name = "dev-app-asg"
+  launch_template {
+    id = aws_launch_template.dev-app-lt.id
+  }
 
+  min_size = 2
+  desired_capacity = 2
+  max_size = 4
+  vpc_zone_identifier = [aws_subnet.dev-private-subnet1.id, aws_subnet.dev-private-subnet2.id]
+}
+
+resource "aws_autoscaling_attachment" "dev-asg-alb-attachment" {
+  autoscaling_group_name = aws_autoscaling_group.dev-asg.name
+  elb = aws_alb.dev-alb.name
+}
 
 
 
