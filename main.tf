@@ -288,7 +288,8 @@ resource "aws_alb_listener_rule" "http-to-https-rule" {
 
   condition {
     host_header {
-      values = [""]
+      values = ["my-service.*.terraform.io"]
     }
   }
 }
+
