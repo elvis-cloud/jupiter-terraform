@@ -274,3 +274,20 @@ resource "aws_alb_listener" "dev-https-listener" {
   }
 }
 
+resource "aws_alb_listener_rule" "http-to-https-rule" {
+  listener_arn = aws_alb_listener.dev-https-listener.arn
+  action {
+    type = "redirect"
+
+    redirect {
+      protocol    = "HTTPS"
+      port        = "443"
+      status_code = "HTTP_301"
+    }
+  }
+
+  condition {
+    field  = "host-header"
+    values = ["*"]
+  }
+}
