@@ -265,8 +265,8 @@ resource "aws_alb_listener" "dev-https-listener" {
   load_balancer_arn = aws_alb.dev-alb.arn
   port = "80"
   protocol = "HTTP"
+  ssl_policy = "ELBSecurityPolicy-2016-08"
   certificate_arn = "arn:aws:acm:us-east-1:463570358144:certificate/9bffa55b-bb97-4845-8e65-25fbc227ebfd"
-
   default_action {
     type = "redirect"
 
@@ -279,5 +279,23 @@ resource "aws_alb_listener" "dev-https-listener" {
     target_group_arn = aws_alb_target_group.dev-tg.arn
   }
 }
+
+resource "aws_alb_listener" "dev-http-listener" {
+  load_balancer_arn = aws_alb.dev-alb.arn
+  port = 80
+  protocol = "HTTP"
+
+  default_action {
+    type = "redirect"
+    redirect {
+      port = "443"
+      protocol = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+
+
 
 
