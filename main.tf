@@ -208,3 +208,39 @@ resource "aws_security_group" "webserver-sg" {
     "Name" = "webserver-sg"
   }
 }
+
+resource "aws_launch_template" "dev-app-lt" {
+  name = "app-server-lt"
+  image_id = "ami-090e0fc566929d98b"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.webserver-sg.id]
+  tags = {
+    "Name" = "app-server-lt"
+  }
+
+  description = "app-server-lt"
+
+  user_data = base64encode(<<-EOF
+    #!/bin/bash
+    sudo su
+    yum update -y
+    yum install -y httpd
+    cd /var/www/html
+    wget https://github.com/elvis-cloud/jupiter/archive/refs/heads/main.zip
+    unzip main.zip
+    cp -r jupiter-main/* /var/www/html/
+    rm -rf jupiter-main main.zip
+    systemctl enable httpd 
+    systemctl start httpd
+    EOF
+  )
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      "Name" = "app-server"
+      "Environment" = "dev"
+    }
+  }
+}
+
