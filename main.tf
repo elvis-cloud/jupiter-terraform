@@ -147,7 +147,6 @@ resource "aws_route_table_association" "private-rt-assoc2" {
 }
 
 resource "aws_security_group" "alb-sg" {
-  name = "alb-sg"
   name_prefix = "alb-sg"
   description = "alb-sg"
   vpc_id = aws_vpc.dev-vpc.id
@@ -180,7 +179,6 @@ resource "aws_security_group" "alb-sg" {
 }
 
 resource "aws_security_group" "webserver-sg" {
-  name = "webserver-sg"
   name_prefix = "webserver-sg"
   description = "webserver-sg"
   vpc_id = aws_vpc.dev-vpc.id
