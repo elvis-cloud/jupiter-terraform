@@ -255,3 +255,40 @@ resource "aws_alb" "dev-alb" {
   }
 }
 
+resource "aws_alb_target_group" "dev-tg" {
+  vpc_id = aws_vpc.dev-vpc.id
+  name = "dev-lb-tg"
+  port = 80
+  protocol = "HTTP"
+}
+
+resource "aws_alb_listener" "dev-https-listener" {
+  load_balancer_arn = aws_alb.dev-alb.arn
+  port = "443"
+  protocol = "HTTPS"
+  ssl_policy = "ELBSecurityPolicy-2016-08"
+  certificate_arn = "arn:aws:acm:us-east-1:463570358144:certificate/9caa84a4-e44c-48ca-a43e-f751f4275c8d"
+
+  default_action {
+    type = "forward"
+
+    target_group_arn = aws_alb_target_group.dev-tg.arn
+  }
+}
+
+resource "aws_alb_listener" "dev-http-listener" {
+  load_balancer_arn = aws_alb.dev-alb.arn
+  port = "80"
+  protocol = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
