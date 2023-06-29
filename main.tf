@@ -244,3 +244,14 @@ resource "aws_launch_template" "dev-app-lt" {
   }
 }
 
+resource "aws_alb" "dev-alb" {
+  name = "dev-alb"
+  load_balancer_type = "application"
+  security_groups = [aws_security_group.alb-sg.id]
+  subnets = [aws_subnet.dev-public-subnet1.id, aws_subnet.dev-public-subnet2.id]
+
+  tags = {
+    "Name" = "dev-alb" 
+  }
+}
+
